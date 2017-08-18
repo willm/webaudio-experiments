@@ -6,7 +6,12 @@ function main () {
         var oscControls = document.getElementById(prefix);
         var waveformSelector = document.getElementsByName(prefix + '-waveform');
         var slider = document.getElementById(prefix + '-detune');
-        synth.events.detune(oscIndex, slider.value);
+        var gainSlider = document.getElementById(prefix + '-gain');
+        gainSlider.oninput = function (e) {
+            var evt = synth.events.gain(oscIndex, Number(e.target.value) / 100);
+            synthElement.dispatchEvent(evt);
+        }
+
         slider.oninput = function (e) {
             var evt = synth.events.detune(oscIndex, e.target.value);
             synthElement.dispatchEvent(evt);

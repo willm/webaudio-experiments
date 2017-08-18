@@ -4,7 +4,7 @@ function Synth(ac, element) {
     this.osc2 = createOsc(ac);
     this.oscs = [this.osc1, this.osc2];
     if (element) {
-        ['detune', 'waveform'].forEach(function (eventType) {
+        ['detune', 'waveform', 'gain'].forEach(function (eventType) {
             element.addEventListener(eventType, function (e) {
                 this[eventType](e.detail)
             }.bind(this));
@@ -38,7 +38,7 @@ Synth.prototype.waveform = function (opts) {
 
 Synth.prototype.detune = function (opts) {
     this._guardOscIndex(opts.oscIndex);
-    this.oscs[opts.oscIndex].osc.detune.value = opts.hertz;
+    this.oscs[opts.oscIndex].osc.detune.value = opts.cents;
 }
 
 Synth.prototype.gain = function (opts) {
@@ -54,11 +54,11 @@ Synth.prototype.freq = function (freq) {
 }
 
 Synth.prototype.events = {
-    detune: function (oscIndex, hertz) {
+    detune: function (oscIndex, cents) {
         return new CustomEvent('detune', {
             detail: {
                 oscIndex: oscIndex,
-                hertz: hertz
+                cents: cents
             }
         });
     },
@@ -70,6 +70,14 @@ Synth.prototype.events = {
             }
         });
     },
+    gain: function (oscIndex, value) {
+        return new CustomEvent('gain', {
+            detail: {
+                oscIndex: oscIndex,
+                value: value
+            }
+        });
+    }
 }
 
 function createOsc(ac) {
@@ -81,7 +89,7 @@ function createOsc(ac) {
     gain.connect(ac.destination);
     return {
         osc:osc,
-        gain: gain
+        gain: gain.gain
     }
 }
 

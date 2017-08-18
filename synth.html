@@ -37,6 +37,17 @@
 						Triangle
 					</input>
 				</div>
+				<div class="control">
+					<label for="osc-1-gain">Gain</label>
+					<input type="range"
+						class="fader"
+						value="0"
+						max="100"
+						min="0"
+						value="50"
+						id="osc-1-gain"
+					/>
+				</div>
 			</div>
 			<div class="osc" id="osc-2">
 				<h2>Osc 2</h2>
@@ -47,7 +58,6 @@
 						value="0"
 						max="20"
 						min="-20"
-						value="440"
 						id="osc-2-detune"
 					/>
 				</div>
@@ -68,6 +78,16 @@
 					<input name="osc-2-waveform" type="radio" value="triangle">
 						Triangle
 					</input>
+				</div>
+				<div class="control">
+					<label for="osc-2-gain">Gain</label>
+					<input type="range"
+						class="fader"
+						max="100"
+						min="0"
+						value="100"
+						id="osc-2-gain"
+					/>
 				</div>
 			</div>
 			<button id="start">Start</button>
