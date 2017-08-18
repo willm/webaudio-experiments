@@ -1,13 +1,7 @@
 function Synth(ac, element) {
     this._freq = 440;
-    this.osc1 = {
-        osc:createOsc(ac),
-        detune: 0
-    };
-    this.osc2 = {
-        osc: createOsc(ac),
-        detune: 0
-    };
+    this.osc1 = createOsc(ac);
+    this.osc2 = createOsc(ac);
     this.oscs = [this.osc1, this.osc2];
     if (element) {
         ['detune', 'waveform'].forEach(function (eventType) {
@@ -39,23 +33,23 @@ Synth.prototype._guardOscIndex = function (oscIndex) {
 
 Synth.prototype.waveform = function (opts) {
     this._guardOscIndex(opts.oscIndex);
-    console.log('changed waveform:' + opts.waveform);
     this.oscs[opts.oscIndex].osc.type = opts.waveform;
 }
 
 Synth.prototype.detune = function (opts) {
     this._guardOscIndex(opts.oscIndex);
-    console.log(opts.hertz);
-    this.oscs[opts.oscIndex].detune = opts.hertz;
-    this.freq(this._freq);
+    this.oscs[opts.oscIndex].osc.detune.value = opts.hertz;
+}
+
+Synth.prototype.gain = function (opts) {
+    this._guardOscIndex(opts.oscIndex);
+    this.oscs[opts.oscIndex].gain.value = opts.value;
 }
 
 Synth.prototype.freq = function (freq) {
     this._freq = freq;
     this.oscs.forEach(function (o) {
-        var adjustedFreq = (freq + Number(o.detune));
-        console.log(adjustedFreq);
-        o.osc.frequency.value = adjustedFreq;
+        o.osc.frequency.value = freq;
     });
 }
 
@@ -80,10 +74,15 @@ Synth.prototype.events = {
 
 function createOsc(ac) {
     var osc = ac.createOscillator();
+    var gain = ac.createGain();
     osc.type = "sawtooth";
 
-    osc.connect(ac.destination);
-    return osc;
+    osc.connect(gain);
+    gain.connect(ac.destination);
+    return {
+        osc:osc,
+        gain: gain
+    }
 }
 
 module.exports = Synth;

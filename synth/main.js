@@ -1,7 +1,6 @@
 var Synth = require('./synth');
 
 function main () {
-    var synthElement = document.getElementById('synth');
     function registerOscillatorControls(synth, id, oscIndex) {
         var prefix = 'osc-' + id;
         var oscControls = document.getElementById(prefix);
@@ -9,7 +8,6 @@ function main () {
         var slider = document.getElementById(prefix + '-detune');
         synth.events.detune(oscIndex, slider.value);
         slider.oninput = function (e) {
-            console.log(e.target.value);
             var evt = synth.events.detune(oscIndex, e.target.value);
             synthElement.dispatchEvent(evt);
         }
@@ -17,7 +15,6 @@ function main () {
             i.onchange = function (e) {
                 var evt = synth.events.waveform(oscIndex, e.target.value);
                 synthElement.dispatchEvent(evt);
-                console.log(evt.target.value);
             }
         });
     }
@@ -28,7 +25,7 @@ function main () {
                 return 440 * Math.pow(2,(note-69)/12);
             }
 
-            var keyboard = 'awsedftgyhu'.split('');
+            var keyboard = 'awsedftgyhujkilo'.split('');
             if (keyboard.indexOf(e.key) != -1) {
                 var midiNote = 60 + keyboard.indexOf(e.key);
                 var freq = frequencyFromNoteNumber(midiNote);
@@ -48,6 +45,7 @@ function main () {
     }
 
     var ac = new AudioContext();
+    var synthElement = document.getElementById('synth');
     var stopButton = document.getElementById('stop');
     var start = document.getElementById('start');
     var synth;
