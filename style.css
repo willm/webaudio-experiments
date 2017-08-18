@@ -1,0 +1,10 @@
+.osc {
+	width: 50%;
+	padding: 0;
+	margin: -1px;
+	display: inline-block;
+}
+
+div.osc .control {
+	width: 100%;
+}

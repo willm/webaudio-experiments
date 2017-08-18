@@ -2,25 +2,63 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
+		<link rel="stylesheet" href="/style.css" />
 		<title>Synth</title>
-		
 	</head>
 	<body>
-		<input type="range"
-			value="440"
-			max="10000"
-			min="30"
-			id="osc1-pitch"
-		/>
-		<input type="range"
-			value="440"
-			max="10000"
-			min="30"
-			id="osc2-pitch"
-		/>
-		<button id="stop">Stop</button>
-		<button id="start">Start</button>
+		<div id="synth">
+			<div class="osc" id="osc-1">
+				<div class="control">
+					<label for="osc-1-detune">Detune</label>
+					<input type="range"
+						class="fader"
+						value="0"
+						max="20"
+						min="-20"
+						id="osc-1-detune"
+					/>
+				</div>
+				<div class="control">
+					<label for="osc-1-waveform">Waveform</label>
+					<input name="osc-1-waveform"
+						type="radio" value="sawtooth"
+						checked
+					>
+						Saw
+					</input>
+					<input name="osc-1-waveform" type="radio" value="sine">
+						Sin
+					</input>
+				</div>
+			</div>
+			<div class="osc" id="osc-2">
+				<div class="control">
+					<label for="osc-2-detune">Detune</label>
+					<input type="range"
+						class="fader"
+						value="0"
+						max="20"
+						min="-20"
+						value="440"
+						id="osc-2-detune"
+					/>
+				</div>
+				<div class="control">
+					<label for="osc-2-waveform">Waveform</label>
+					<input name="osc-2-waveform"
+						type="radio" value="sawtooth"
+						checked
+					>
+						Saw
+					</input>
+					<input name="osc-2-waveform" type="radio" value="sine">
+						Sin
+					</input>
+				</div>
+			</div>
+			<button id="start">Start</button>
+			<button id="stop">Stop</button>
+		</div>
 		<script type="text/javascript" charset="utf-8" src="/build/bundle.js"></script>
 	</body>
 </html>
