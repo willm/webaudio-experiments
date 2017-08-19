@@ -20,7 +20,6 @@ Synth.prototype.start = function () {
     });
 }
 
-
 Synth.prototype.stop = function () {
     this.oscs.forEach(function (o) {
         o.osc.stop();
@@ -123,6 +122,7 @@ Synth.prototype.events = {
 function createOsc(ac) {
     var osc = ac.createOscillator();
     var gain = ac.createGain();
+    gain.gain.value = 0.1;
     var pan = ac.createStereoPanner();
     osc.type = "sawtooth";
 
@@ -133,7 +133,7 @@ function createOsc(ac) {
         osc:osc,
         gain: gain.gain,
         pan: pan.pan,
-        _gain: 1,
+        _gain: 0.1,
         _octave: 0
     };
 }
