@@ -1,11 +1,11 @@
 function Synth(ac, element) {
-    this._freq = 440;
+    this._midiNote = 60;
     this.osc1 = createOsc(ac);
     this.osc2 = createOsc(ac);
     this.oscs = [this.osc1, this.osc2];
     if (element) {
         [
-            'detune', 'waveform', 'gain', 'pan'
+            'detune', 'waveform', 'gain', 'pan', 'octave'
         ].forEach(function (eventType) {
             element.addEventListener(eventType, function (e) {
                 this[eventType](e.detail)
@@ -48,6 +48,11 @@ Synth.prototype.pan = function (opts) {
     this.oscs[opts.oscIndex].pan.value = opts.value;
 }
 
+Synth.prototype.octave = function (opts) {
+    this._guardOscIndex(opts.oscIndex);
+    this.oscs[opts.oscIndex]._octave = opts.value;
+}
+
 Synth.prototype.gain = function (opts) {
     this._guardOscIndex(opts.oscIndex);
     var osc = this.oscs[opts.oscIndex];
@@ -55,10 +60,13 @@ Synth.prototype.gain = function (opts) {
     osc.gain.value = opts.value;
 }
 
-Synth.prototype.noteOn = function (freq) {
-    this._freq = freq;
+Synth.prototype.noteOn = function (midiNote) {
+    this._midiNote = midiNote;
     this.oscs.forEach(function (o) {
-        o.osc.frequency.value = freq;
+        var actualNote = midiNote + (12 * o._octave);
+        o.osc.frequency.value = frequencyFromNoteNumber(
+            actualNote
+        );
         o.gain.value = o._gain;
     });
 }
@@ -101,6 +109,14 @@ Synth.prototype.events = {
                 value: value
             }
         });
+    },
+    octave: function (oscIndex, value) {
+        return new CustomEvent('octave', {
+            detail: {
+                oscIndex: oscIndex,
+                value: value
+            }
+        });
     }
 }
 
@@ -117,8 +133,13 @@ function createOsc(ac) {
         osc:osc,
         gain: gain.gain,
         pan: pan.pan,
-        _gain: 1
+        _gain: 1,
+        _octave: 0
     };
+}
+
+function frequencyFromNoteNumber( note ) {
+    return 440 * Math.pow(2,(note-69)/12);
 }
 
 module.exports = Synth;

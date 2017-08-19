@@ -8,8 +8,14 @@ function main () {
         var slider = document.getElementById(prefix + '-detune');
         var gainSlider = document.getElementById(prefix + '-gain');
         var panSlider = document.getElementById(prefix + '-pan');
+        var octaveSlider = document.getElementById(prefix + '-octave');
         gainSlider.oninput = function (e) {
             var evt = synth.events.gain(oscIndex, Number(e.target.value) / 100);
+            synthElement.dispatchEvent(evt);
+        }
+
+        octaveSlider.oninput = function (e) {
+            var evt = synth.events.octave(oscIndex, Number(e.target.value));
             synthElement.dispatchEvent(evt);
         }
 
@@ -32,15 +38,10 @@ function main () {
 
     function connectKeyboard (synth) {
         document.onkeydown = function (e) {
-            function frequencyFromNoteNumber( note ) {
-                return 440 * Math.pow(2,(note-69)/12);
-            }
-
             var keyboard = 'awsedftgyhujkilo'.split('');
             if (keyboard.indexOf(e.key) != -1) {
                 var midiNote = 60 + keyboard.indexOf(e.key);
-                var freq = frequencyFromNoteNumber(midiNote);
-                synth.noteOn(freq);
+                synth.noteOn(midiNote);
             }
         }
         document.onkeyup = function (e) {
