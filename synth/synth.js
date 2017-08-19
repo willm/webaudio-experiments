@@ -50,13 +50,22 @@ Synth.prototype.pan = function (opts) {
 
 Synth.prototype.gain = function (opts) {
     this._guardOscIndex(opts.oscIndex);
-    this.oscs[opts.oscIndex].gain.value = opts.value;
+    var osc = this.oscs[opts.oscIndex];
+    osc._gain = opts.value;
+    osc.gain.value = opts.value;
 }
 
-Synth.prototype.freq = function (freq) {
+Synth.prototype.noteOn = function (freq) {
     this._freq = freq;
     this.oscs.forEach(function (o) {
         o.osc.frequency.value = freq;
+        o.gain.value = o._gain;
+    });
+}
+
+Synth.prototype.noteOff = function () {
+    this.oscs.forEach(function (o) {
+        o.gain.value = 0;
     });
 }
 
@@ -107,7 +116,8 @@ function createOsc(ac) {
     return {
         osc:osc,
         gain: gain.gain,
-        pan: pan.pan
+        pan: pan.pan,
+        _gain: 1
     };
 }
 

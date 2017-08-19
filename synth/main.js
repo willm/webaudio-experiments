@@ -40,9 +40,11 @@ function main () {
             if (keyboard.indexOf(e.key) != -1) {
                 var midiNote = 60 + keyboard.indexOf(e.key);
                 var freq = frequencyFromNoteNumber(midiNote);
-                console.log(e.key, freq);
-                synth.freq(freq);
+                synth.noteOn(freq);
             }
+        }
+        document.onkeyup = function (e) {
+            synth.noteOff();
         }
     }
 
