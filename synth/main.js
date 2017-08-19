@@ -7,8 +7,14 @@ function main () {
         var waveformSelector = document.getElementsByName(prefix + '-waveform');
         var slider = document.getElementById(prefix + '-detune');
         var gainSlider = document.getElementById(prefix + '-gain');
+        var panSlider = document.getElementById(prefix + '-pan');
         gainSlider.oninput = function (e) {
             var evt = synth.events.gain(oscIndex, Number(e.target.value) / 100);
+            synthElement.dispatchEvent(evt);
+        }
+
+        panSlider.oninput = function (e) {
+            var evt = synth.events.pan(oscIndex, Number(e.target.value) / 100);
             synthElement.dispatchEvent(evt);
         }
 

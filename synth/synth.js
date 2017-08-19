@@ -4,7 +4,9 @@ function Synth(ac, element) {
     this.osc2 = createOsc(ac);
     this.oscs = [this.osc1, this.osc2];
     if (element) {
-        ['detune', 'waveform', 'gain'].forEach(function (eventType) {
+        [
+            'detune', 'waveform', 'gain', 'pan'
+        ].forEach(function (eventType) {
             element.addEventListener(eventType, function (e) {
                 this[eventType](e.detail)
             }.bind(this));
@@ -39,6 +41,11 @@ Synth.prototype.waveform = function (opts) {
 Synth.prototype.detune = function (opts) {
     this._guardOscIndex(opts.oscIndex);
     this.oscs[opts.oscIndex].osc.detune.value = opts.cents;
+}
+
+Synth.prototype.pan = function (opts) {
+    this._guardOscIndex(opts.oscIndex);
+    this.oscs[opts.oscIndex].pan.value = opts.value;
 }
 
 Synth.prototype.gain = function (opts) {
@@ -77,20 +84,31 @@ Synth.prototype.events = {
                 value: value
             }
         });
+    },
+    pan: function (oscIndex, value) {
+        return new CustomEvent('pan', {
+            detail: {
+                oscIndex: oscIndex,
+                value: value
+            }
+        });
     }
 }
 
 function createOsc(ac) {
     var osc = ac.createOscillator();
     var gain = ac.createGain();
+    var pan = ac.createStereoPanner();
     osc.type = "sawtooth";
 
     osc.connect(gain);
-    gain.connect(ac.destination);
+    gain.connect(pan);
+    pan.connect(ac.destination);
     return {
         osc:osc,
-        gain: gain.gain
-    }
+        gain: gain.gain,
+        pan: pan.pan
+    };
 }
 
 module.exports = Synth;
