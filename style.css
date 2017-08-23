@@ -1,21 +1,7 @@
-body {
-	font-family: sans-serif;
-}
-.osc {
-	width: 50%;
-	padding: 5px 0;
-	margin: -2px;
-	display: inline-block;
-}
-
-div.osc .control {
-	width: 100%;
-}
-
 input[type=range] {
-  margin: 4.1px 30%;
+  width: 100%;
   -webkit-appearance: none;
-  float: right;
+  margin: 0;
 }
 
 input[type=range]:focus {
@@ -120,7 +106,5 @@ input[type=radio]:checked + label svg path {
 }
 
 .waves {
-	margin-right: 20%;
-	float: right;
-	width: 50%;
+	padding: auto;
 }
