@@ -16,6 +16,7 @@ function Synth(ac, element) {
 
 Synth.prototype.start = function () {
     this.oscs.forEach(function (o) {
+        o.gain.value = 0;
         o.osc.start();
     });
 }
