@@ -115,5 +115,12 @@ input[type=radio] {
 }
 
 input[type=radio]:checked + label svg path {
-    stroke: #f00;
+    stroke: #2a962a;
+	stroke-width: 3px;
+}
+
+.waves {
+	margin-right: 20%;
+	float: right;
+	width: 50%;
 }
