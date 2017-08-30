@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+		<style type="text/css" media="all">
+			input[type=radio] {
+				  display: none;
+			}
+
+			input[type=radio]:checked + label svg path {
+				  stroke: #f00;
+			}
+		</style>
+		<title></title>
+		
+	</head>
+	<body>
+		<input type="radio" id="sine" name="opt"></input>
+		<label for="sine">
+		  <svg width="190px" height="160px" version="1.1"  xmlns="http://www.w3.org/2000/svg">
+			<path stroke="#000" stroke-width="2.0" fill="transparent" d="M-50,95 C-15,95 15,15 50,15 C85,15 115,95 150,95 C185,95 215,15 250,15 C285,15 315,95 350"/>
+		  </svg>
+		</label>
+		<input type="radio" id="square" name="opt"></input>
+		<label for="square">
+		  <svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<path xmlns="http://www.w3.org/2000/svg" stroke="#000" fill="transparent" stroke-width="2.0" d="M0,15 h100 v80 h100 v-80 h50"/>
+		  </svg>
+		</label>
+		<input type="radio" id="triangle" name="opt"></input>
+		<label for="triangle">
+		  <svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<path xmlns="http://www.w3.org/2000/svg" stroke="#000" fill="transparent" stroke-width="2.0" d="M0,55 l50,-40 l100,80 l100,-80 l50,40"/>
+		  </svg>
+		</label>
+		<input type="radio" id="sawtooth" name="opt"></input>
+		<label for="sawtooth">
+		  <svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+			<path xmlns="http://www.w3.org/2000/svg" fill="transparent" stroke="#000" stroke-width="2.0" d="M0,55 l100,-40 v80 l200,-80 v80 l200"/>
+		  </svg>
+		</label>
+	</body>
+</html>
