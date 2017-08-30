@@ -8,7 +8,7 @@
     "static": "cp -r src/index.html src/static build",
     "build": "npm run clean && npm run static && browserify src/synth/main.js -o build/bundle.js",
     "start": "npm run build && cd build &&  python -m SimpleHTTPServer",
-    "deploy": "npm run build && cd build && git init && git remote add origin git@github.com:willm/willm.github.io.git && git add -A && git commit -m \"Deploy: $(date)\" && git push origin master"
+    "deploy": "npm run build && cd build && git clone git@github.com:willm/willm.github.io.git && git add -A && git commit -m \"Deploy: $(date)\" && git push origin master"
   },
   "author": "",
   "license": "ISC",
